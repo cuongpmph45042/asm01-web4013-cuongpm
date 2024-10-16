@@ -2,6 +2,8 @@
 
 @section('title', 'Property')
 
+@include('client.partials.carousel')
+
 @section('content')
     <div class="section">
         <div class="container">
@@ -23,8 +25,8 @@
                         <div class="property-slider">
                             @foreach ($properties as $item)
                                 <div class="property-item">
-                                    <a href="property-single.html" class="img">
-                                        <img src="{{$item->image}}" alt="Image" class="img-fluid" />
+                                    <a href="{{ route('page.detail', $item->id) }}" class="img">
+                                        <img src="{{ Storage::url($item->image) }}" alt="Image" class="img-fluid" />
                                     </a>
 
                                     <div class="property-content">

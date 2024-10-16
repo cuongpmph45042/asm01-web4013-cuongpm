@@ -16,11 +16,14 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained();
 
             $table->string('title');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('address');
             $table->double('area');
             $table->integer('rooms');
-            $table->text('description');
+            $table->double('price')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('views')->default(0);
+            $table->softDeletes();
 
             $table->timestamps();
         });

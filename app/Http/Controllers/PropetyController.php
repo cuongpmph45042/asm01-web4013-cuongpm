@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -9,22 +10,16 @@ class PropetyController extends Controller
 {
     public function index()
     {
-        $properties = DB::table('properties')
-            ->join('categories', 'properties.category_id', '=', 'categories.id')
-            ->select('properties.*', 'name')
-            ->orderByDesc('id')
-            ->get();
+        $properties = Property::query()->latest()->paginate(10);
 
         return view('client.index', compact('properties'));
     }
 
     public function detail($id)
     {
-        $property = DB::table('properties')
-            ->join('categories', 'properties.category_id', '=', 'categories.id')
-            ->select('properties.*', 'categories.name')
-            ->where('properties.id', $id)
-            ->first();
+        $property = Property::with('category')->findOrFail($id);
+
+        $property->increment('views');
         return view('client.properties.detail', compact('property'));
     }
 
@@ -39,11 +34,9 @@ class PropetyController extends Controller
         return view('client.properties.fill-category', compact('properties'));
     }
 
-    public function all() {
-        $properties = DB::table('properties')
-            ->select('*')
-            ->orderByDesc('id')
-            ->get();
-    return view('client.properties.list', compact('properties'));
+    public function all()
+    {
+        $properties = Property::query()->latest()->paginate(9);
+        return view('client.properties.list', compact('properties'));
     }
 }

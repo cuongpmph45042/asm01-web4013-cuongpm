@@ -1,13 +1,16 @@
 @extends('client.layout.layout')
 @section('title', 'Chi tiết')
+
 @section('content')
+    <div style="height: 100px">
+    </div>
     <div class="section">
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-lg-7">
                     <div class="img-property-slide-wrap">
                         <div class="img-property-slide">
-                            <img src="{{ $property->image }}" alt="Image" class="img-fluid" />
+                            <img src="{{ Storage::url($property->image) }}" alt="Image" class="img-fluid" />
                         </div>
                     </div>
                 </div>
@@ -16,9 +19,9 @@
                     <p class="meta">Địa chỉ: {{ $property->address }}, Việt Nam</p>
                     <div class="text">
                         <h4 class="text-danger">
-                            {{ $property->price }}$
+                            {{ number_format($property->price, 2, '.', ',') . '$' }}
                         </h4>
-                        <span>Danh mục: {{ $property->name }}</span> <br>                
+                        <span>Danh mục: {{ $property->category->name }}</span> <br>
                         <span>Diện tích: {{ $property->area }} m<sup>2</sup></span> <br>
                         <span>Số phòng: {{ $property->rooms }}</span>
                     </div>

@@ -2,14 +2,16 @@
 @section('title')
     Lọc theo danh mục
 @endsection
+@include('client.partials.carousel')
+
 @section('content')
     <div class="container mt-5">
         <div class="row">
             @foreach ($properties as $item)
                 <div class="col-md-4">
                     <div class="property-item">
-                        <a href="property-single.html" class="img">
-                            <img src="{{ $item->image }}" alt="Image" class="img-fluid" />
+                        <a href="{{ route('page.detail', $item->id) }}" class="img">
+                            <img src="{{ Storage::url($item->image) }}" width="100" alt="Image" class="img-fluid" />
                         </a>
 
                         <div class="property-content">
